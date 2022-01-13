@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -67,7 +68,10 @@ public class RoomFragment extends Fragment {
                         holder.SetRoom(getActivity(),model.getUrl(),model.getUid(),model.getName(),model.getType(),model.getFloor(),model.getDate(),
                                 model.getTime());
 
-
+                        holder.cv.setOnClickListener(v -> {
+                            Intent intent = new Intent(getActivity(),RoomWeekActivity.class);
+                            startActivity(intent);
+                        });
 
                     }
 

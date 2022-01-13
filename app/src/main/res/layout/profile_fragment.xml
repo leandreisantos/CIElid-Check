@@ -178,7 +178,7 @@
         android:id="@+id/loginlot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_number_pf"
+        app:layout_constraintTop_toBottomOf="@id/tv_statusf_pf"
         app:layout_constraintRight_toRightOf="parent"
         app:lottie_rawRes="@raw/informationlot"
         app:lottie_autoPlay="true"
