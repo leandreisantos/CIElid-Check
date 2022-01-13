@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PROFILE"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_logout_pf"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:background="@drawable/custom_input"
+        android:backgroundTint="@color/red"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_pf"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="75dp"
+        app:cardElevation="10dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:id="@+id/iv_pf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_name_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full Name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/cv_pf"
+        android:layout_marginTop="75dp"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_status_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="status"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_name_pf"
+        app:layout_constraintLeft_toRightOf="@id/cv_pf"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/lbl_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Information"
+        app:layout_constraintTop_toBottomOf="@id/cv_pf"
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TableRow
+        android:id="@+id/tb_pf"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:layout_constraintTop_toBottomOf="@id/lbl_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/grey"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_fname_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Text"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tb_pf"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/username_logo"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_email_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Text"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tv_fname_pf"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/email_icon"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_statusf_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sample Text"
+        app:layout_constraintTop_toBottomOf="@id/tv_email_pf"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textColor="@color/grey"
+        android:gravity="center"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/status_icon"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_number_pf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="09123456789"
+        app:layout_constraintTop_toBottomOf="@id/tv_statusf_pf"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:drawablePadding="10dp"
+        android:textColor="@color/grey"
+        android:drawableStart="@drawable/number_icon"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_edit_pf"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_number_pf"
+        android:background="@drawable/custom_outline_bg"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Edit Profile"
+        android:gravity="center"/>
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loginlot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_number_pf"
+        app:layout_constraintRight_toRightOf="parent"
+        app:lottie_rawRes="@raw/informationlot"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

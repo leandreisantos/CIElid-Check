@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "476340122657",
+    "project_id": "cielidcheck",
+    "storage_bucket": "cielidcheck.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476340122657:android:fce6bef96ad2a02d841f60",
+        "android_client_info": {
+          "package_name": "com.example.cielid_check"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "476340122657-umtvfv8qv4d1hhebneskkddrf5q0t1g2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cielid_check",
+            "certificate_hash": "b2ed501f1cec847a9e642ac7d7c384cb59acba9e"
+          }
+        },
+        {
+          "client_id": "476340122657-08rlkmbm2gnjcgledhpiof5o0fck2eg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZi_4PE6db3BWLNsyspTYNGBfm8CP_h1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "476340122657-08rlkmbm2gnjcgledhpiof5o0fck2eg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

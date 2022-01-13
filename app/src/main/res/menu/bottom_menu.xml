@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Events"
+        android:icon="@drawable/events_icon"
+        app:showAsAction="always"
+        android:id="@+id/event_bottom"/>
+
+    <item android:title="Rooms"
+        android:icon="@drawable/room_icon"
+        app:showAsAction="always"
+        android:id="@+id/room_bottom"/>
+
+    <item android:title="Academic Calendar"
+        android:icon="@drawable/calendar_icon"
+        app:showAsAction="always"
+        android:id="@+id/calendar_bottom"/>
+
+    <item android:title="Profile"
+        android:icon="@drawable/username_logo"
+        app:showAsAction="always"
+        android:id="@+id/profile_bottom"/>
+
+</menu>
