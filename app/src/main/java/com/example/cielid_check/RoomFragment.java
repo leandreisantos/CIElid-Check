@@ -68,8 +68,11 @@ public class RoomFragment extends Fragment {
                         holder.SetRoom(getActivity(),model.getUrl(),model.getUid(),model.getName(),model.getType(),model.getFloor(),model.getDate(),
                                 model.getTime());
 
+                        String name = getItem(position).getName();
+
                         holder.cv.setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(),RoomWeekActivity.class);
+                            intent.putExtra("name",name);
                             startActivity(intent);
                         });
 
