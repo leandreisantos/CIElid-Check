@@ -38,7 +38,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference;
+    DatabaseReference reference,referenceSched;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
@@ -47,12 +47,15 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     int hour,minute;
 
+    ScheduleMember member;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
         mAuth = FirebaseAuth.getInstance();
+        member = new ScheduleMember();
 
         reference = database.getReference("All users").child(currentuid);
 
@@ -62,7 +65,10 @@ public class AddScheduleActivity extends AppCompatActivity {
             namebundle = extras.getString("name");
             weekbundle = extras.getString("w");
         }
+
         else Toast.makeText(this, "No Week Selected", Toast.LENGTH_SHORT).show();
+
+        referenceSched = database.getReference(namebundle).child(weekbundle);
 
         back = findViewById(R.id.tv_back_as);
         roomName = findViewById(R.id.tv_room_as);
@@ -79,11 +85,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         back.setOnClickListener(v -> onBackPressed());
         submit.setOnClickListener(v -> {
-            if(rb1.isChecked()){
-                Toast.makeText(AddScheduleActivity.this, "Class", Toast.LENGTH_SHORT).show();
-            }if(rb2.isChecked()){
-                Toast.makeText(AddScheduleActivity.this, "Event", Toast.LENGTH_SHORT).show();
-            }
+            submitData();
         });
 
         stime.setOnClickListener(v -> {
@@ -96,7 +98,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(0,0,0,hour,minute);
 
-                        stime.setText(DateFormat.format("hh:mm aa",calendar));
+                         stime.setText(DateFormat.format("hh:mm aa",calendar));
+//                        stime.setText(Integer.toString(hourOfDay)+Integer.toString(minute));
 
                     },12,0,false
             );
@@ -122,6 +125,40 @@ public class AddScheduleActivity extends AppCompatActivity {
             timePickerDialog.updateTime(hour,minute);
             timePickerDialog.show();
         });
+    }
+
+    private void submitData() {
+        String temps = stime.getText().toString();
+        String tempe = etime.getText().toString();
+        String radio_ans="";
+        
+        if(temps.equals("0")||tempe.equals("0")){
+            Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
+        }else if(temps.equals(tempe)){
+            Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
+        }else{
+            if(rb1.isChecked()||rb2.isChecked()){
+                if(rb1.isChecked()) radio_ans = "Class";
+                if(rb2.isChecked()) radio_ans = "Event";
+
+                String id = referenceSched.push().getKey();
+
+                member.setRoomname(namebundle);
+                member.setTeacher(currentuid);
+                member.setPurpose(radio_ans);
+                member.setStartTime(temps);
+                member.setEndTime(tempe);
+                member.setWeek(weekbundle);
+                member.setPostkey(id);
+
+                referenceSched.child(id).setValue(member);
+
+                Toast.makeText(AddScheduleActivity.this, "Schedule Created", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+
+            }else Toast.makeText(AddScheduleActivity.this, "Please Select purpose of your schedule", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     @Override

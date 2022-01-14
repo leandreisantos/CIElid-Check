@@ -197,7 +197,7 @@
                 android:id="@+id/tv_st_as"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="1:00pm"
+                android:text="0"
                 android:background="@drawable/custom_input_et"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/lbl_st_as"
@@ -220,7 +220,7 @@
                 android:id="@+id/tv_et_as"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:text="1:00pm"
+                android:text="0"
                 android:background="@drawable/custom_input_et"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/lbl_st_as"
@@ -267,10 +267,10 @@
                 android:layout_marginTop="10dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/rv_sched_as"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/tv_sched_as"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_margin="10dp"
@@ -278,8 +278,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loginlot"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_sched_as"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

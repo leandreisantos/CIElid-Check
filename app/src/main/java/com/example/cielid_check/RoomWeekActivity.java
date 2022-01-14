@@ -12,6 +12,7 @@ public class RoomWeekActivity extends AppCompatActivity {
 
     TextView monday,tuesday,wednesday,thursday,friday,saturday,sunday;
     String namebundle;
+    TextView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,9 @@ public class RoomWeekActivity extends AppCompatActivity {
         friday = findViewById(R.id.tv_fri_arw);
         sunday = findViewById(R.id.tv_sun_arw);
         saturday = findViewById(R.id.tv_sat_arw);
+        back = findViewById(R.id.tv_back_arw);
+
+        back.setOnClickListener(view -> onBackPressed());
 
 
         monday.setOnClickListener(v -> {
