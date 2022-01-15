@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,8 @@ public class SelectedWeekActivity extends AppCompatActivity {
     TextView title,back;
     ImageButton add;
     RecyclerView recyclerView;
+    LottieAnimationView lot;
+    TextView nosched;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -43,6 +46,7 @@ public class SelectedWeekActivity extends AppCompatActivity {
     String currentuid = user.getUid();
 
     LinearLayoutManager linearLayoutManager;
+    long count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,8 @@ public class SelectedWeekActivity extends AppCompatActivity {
         back = findViewById(R.id.tv_back_sw);
         add = findViewById(R.id.btn_add_ef);
         recyclerView = findViewById(R.id.rv_sw);
+        lot = findViewById(R.id.loginlot);
+        nosched = findViewById(R.id.tv_nosched_asw);
 
         linearLayoutManager = new LinearLayoutManager(SelectedWeekActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -86,43 +92,64 @@ public class SelectedWeekActivity extends AppCompatActivity {
         super.onStart();
 
         title.setText("Schedule For "+weekBundle);
+        nosched.setText("No Schedule for " + weekBundle+".....");
 
-        FirebaseRecyclerOptions<ScheduleMember> options =
-                new FirebaseRecyclerOptions.Builder<ScheduleMember>()
-                        .setQuery(referenceSched,ScheduleMember.class)
-                        .build();
+        referenceSched.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                count = snapshot.getChildrenCount();
+                if(count>=1){
+                    nosched.setVisibility(View.GONE);
+                    lot.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
-        FirebaseRecyclerAdapter<ScheduleMember,ScheduleHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<ScheduleMember, ScheduleHolder>(options) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull ScheduleHolder holder, int position, @NonNull ScheduleMember model) {
+                    FirebaseRecyclerOptions<ScheduleMember> options =
+                            new FirebaseRecyclerOptions.Builder<ScheduleMember>()
+                                    .setQuery(referenceSched,ScheduleMember.class)
+                                    .build();
 
-                        holder.SetSched(getApplication(),model.getRoomname(),model.getTeacher(),model.getPurpose(),model.getStartTime(),model.getEndTime(),model.getWeek());
+                    FirebaseRecyclerAdapter<ScheduleMember,ScheduleHolder> firebaseRecyclerAdapter =
+                            new FirebaseRecyclerAdapter<ScheduleMember, ScheduleHolder>(options) {
+                                @Override
+                                protected void onBindViewHolder(@NonNull ScheduleHolder holder, int position, @NonNull ScheduleMember model) {
 
-                        String idname = getItem(position).getTeacher();
-                        String purposeholder  = getItem(position).getPurpose();
-                        String sholder  = getItem(position).getStartTime();
-                        String eholder  = getItem(position).getEndTime();
+                                    holder.SetSched(getApplication(),model.getRoomname(),model.getTeacher(),model.getPurpose(),model.getStartTime(),model.getEndTime(),model.getWeek());
+
+                                    String idname = getItem(position).getTeacher();
+                                    String purposeholder  = getItem(position).getPurpose();
+                                    String sholder  = getItem(position).getStartTime();
+                                    String eholder  = getItem(position).getEndTime();
 
 
-                        holder.info.setOnClickListener(view -> showIncharge(idname,purposeholder,sholder,eholder));
+                                    holder.info.setOnClickListener(view -> showIncharge(idname,purposeholder,sholder,eholder));
 
-                    }
+                                }
 
-                    @NonNull
-                    @Override
-                    public ScheduleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                                @NonNull
+                                @Override
+                                public ScheduleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                        View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.schedule_item,parent,false);
+                                    View view = LayoutInflater.from(parent.getContext())
+                                            .inflate(R.layout.schedule_item,parent,false);
 
-                        return new ScheduleHolder(view);
-                    }
-                };
+                                    return new ScheduleHolder(view);
+                                }
+                            };
 
-        firebaseRecyclerAdapter.startListening();
+                    firebaseRecyclerAdapter.startListening();
 
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+                    recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 

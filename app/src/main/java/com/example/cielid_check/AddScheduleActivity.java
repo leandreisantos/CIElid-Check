@@ -2,11 +2,16 @@ package com.example.cielid_check;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -14,6 +19,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +39,8 @@ public class AddScheduleActivity extends AppCompatActivity {
     TextView roomName,name,submit,stime,etime;
     TextView sched,nosched;
     ImageView iv;
+    LottieAnimationView lot;
+    RecyclerView rv;
 
     RadioButton rb1,rb2;
 
@@ -48,6 +58,9 @@ public class AddScheduleActivity extends AppCompatActivity {
     int hour,minute;
 
     ScheduleMember member;
+    long count;
+
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +94,13 @@ public class AddScheduleActivity extends AppCompatActivity {
         nosched = findViewById(R.id.lbl_nosched);
         stime = findViewById(R.id.tv_st_as);
         etime = findViewById(R.id.tv_et_as);
+        lot = findViewById(R.id.loginlot);
+        rv = findViewById(R.id.rv_sched_as);
+
+        linearLayoutManager = new LinearLayoutManager(AddScheduleActivity.this);
+        rv.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
 
 
         back.setOnClickListener(v -> onBackPressed());
@@ -184,5 +204,103 @@ public class AddScheduleActivity extends AppCompatActivity {
 
             }
         });
+
+        referenceSched.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                count = snapshot.getChildrenCount();
+                if(count>=1){
+                    nosched.setVisibility(View.GONE);
+                    lot.setVisibility(View.GONE);
+                    rv.setVisibility(View.VISIBLE);
+
+                    FirebaseRecyclerOptions<ScheduleMember> options =
+                            new FirebaseRecyclerOptions.Builder<ScheduleMember>()
+                                    .setQuery(referenceSched,ScheduleMember.class)
+                                    .build();
+
+                    FirebaseRecyclerAdapter<ScheduleMember,ScheduleHolder> firebaseRecyclerAdapter =
+                            new FirebaseRecyclerAdapter<ScheduleMember, ScheduleHolder>(options) {
+                                @Override
+                                protected void onBindViewHolder(@NonNull ScheduleHolder holder, int position, @NonNull ScheduleMember model) {
+
+                                    holder.SetSched(getApplication(),model.getRoomname(),model.getTeacher(),model.getPurpose(),model.getStartTime(),model.getEndTime(),model.getWeek());
+
+                                    String idname = getItem(position).getTeacher();
+                                    String purposeholder  = getItem(position).getPurpose();
+                                    String sholder  = getItem(position).getStartTime();
+                                    String eholder  = getItem(position).getEndTime();
+
+
+                                    holder.info.setOnClickListener(view -> showIncharge(idname,purposeholder,sholder,eholder));
+
+                                }
+
+                                @NonNull
+                                @Override
+                                public ScheduleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                                    View view = LayoutInflater.from(parent.getContext())
+                                            .inflate(R.layout.schedule_item,parent,false);
+
+                                    return new ScheduleHolder(view);
+                                }
+                            };
+
+                    firebaseRecyclerAdapter.startListening();
+
+                    rv.setAdapter(firebaseRecyclerAdapter);
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+    private void showIncharge(String uid_i,String pur_i,String s_i,String e_i) {
+
+        LayoutInflater inflater = LayoutInflater.from(AddScheduleActivity.this);
+        View view = inflater.inflate(R.layout.info_sched_item,null);
+        TextView name = view.findViewById(R.id.tv_name_isi);
+        TextView purpose = view.findViewById(R.id.tv_purpose_isi);
+        TextView time = view.findViewById(R.id.tv_time_isi);
+        ImageView iv = view.findViewById(R.id.iv_isi);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(AddScheduleActivity.this)
+                .setView(view)
+                .create();
+        alertDialog.show();
+
+        reference = database.getReference("All users").child(uid_i);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String url = snapshot.child("url").getValue(String.class);
+                String nameholder = snapshot.child("name").getValue(String.class);
+
+                Picasso.get().load(url).into(iv);
+                name.setText(nameholder);
+                time.setText(s_i + " - "+e_i);
+                purpose.setText(pur_i);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
     }
 }
