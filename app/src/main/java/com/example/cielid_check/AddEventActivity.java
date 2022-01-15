@@ -45,7 +45,7 @@ public class AddEventActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
 
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference2;
 
     Uri imageUridp;
     UploadTask uploadTask;
@@ -73,6 +73,7 @@ public class AddEventActivity extends AppCompatActivity {
         else Toast.makeText(this, "No Day Selected", Toast.LENGTH_SHORT).show();
 
         databaseReference = database.getReference("All Event").child(year).child(month).child(day);
+        databaseReference2 = database.getReference("All Events");
         storageReference = FirebaseStorage.getInstance().getReference("Event Picture");
 
         back = findViewById(R.id.tv_back_cp);
@@ -144,6 +145,7 @@ public class AddEventActivity extends AppCompatActivity {
                     member.setPostkey(id1);
 
                     databaseReference.child(id1).setValue(member);
+                    databaseReference2.child(id1).setValue(member);
 
                     Toast.makeText(AddEventActivity.this, "Event Created", Toast.LENGTH_SHORT).show();
                     onBackPressed();
