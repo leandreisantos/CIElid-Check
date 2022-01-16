@@ -16,6 +16,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,9 +49,12 @@ public class CalendarFragment extends Fragment {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,reference2;
+    DatabaseReference reference,reference2,userReference;
 
     LinearLayoutManager linearLayoutManager;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
 
     @Nullable
     @Override
@@ -60,6 +65,8 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        userReference = database.getReference("All users").child(currentuid);
 
         addEvent = getActivity().findViewById(R.id.btn_add_ef);
         calendar = getActivity().findViewById(R.id.calendarview_cf);
@@ -169,6 +176,23 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String statusholder = snapshot.child("status").getValue(String.class);
+
+                if(statusholder.equals("admin")){
+                    add_event.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         SimpleDateFormat simpleDateFormatYear = new SimpleDateFormat("yyyy");
         year = simpleDateFormatYear.format(c);

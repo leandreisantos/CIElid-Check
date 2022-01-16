@@ -17,6 +17,7 @@
         android:layout_marginStart="10dp"/>
 
     <androidx.cardview.widget.CardView
+        android:visibility="gone"
         android:id="@+id/cv_rf"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"

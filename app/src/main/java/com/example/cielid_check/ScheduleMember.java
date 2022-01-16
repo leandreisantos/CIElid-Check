@@ -9,6 +9,8 @@ public class ScheduleMember {
     String endTime;
     String week;
     String postkey;
+    String startTime2;
+    String endTime2;
 
     public ScheduleMember(){
 
@@ -68,6 +70,22 @@ public class ScheduleMember {
 
     public void setPostkey(String postkey) {
         this.postkey = postkey;
+    }
+
+    public String getStartTime2() {
+        return startTime2;
+    }
+
+    public void setStartTime2(String startTime2) {
+        this.startTime2 = startTime2;
+    }
+
+    public String getEndTime2() {
+        return endTime2;
+    }
+
+    public void setEndTime2(String endTime2) {
+        this.endTime2 = endTime2;
     }
 
 

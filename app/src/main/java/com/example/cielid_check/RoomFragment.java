@@ -10,12 +10,19 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,11 +32,15 @@ public class RoomFragment extends Fragment {
 
     ImageButton add;
     RecyclerView rv;
+    CardView cv;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,userReference;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
 
     @Nullable
     @Override
@@ -42,8 +53,10 @@ public class RoomFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         databaseReference = database.getReference("All Room");
+        userReference = database.getReference("All users").child(currentuid);
 
         add = getActivity().findViewById(R.id.btn_add_rf);
+        cv = getActivity().findViewById(R.id.cv_rf);
         rv = getActivity().findViewById(R.id.rv_dash);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -54,6 +67,25 @@ public class RoomFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String statusholder = snapshot.child("status").getValue(String.class);
+
+                if(statusholder.equals("admin")){
+                    cv.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         FirebaseRecyclerOptions<AllRoomMember> options2 =
                 new FirebaseRecyclerOptions.Builder<AllRoomMember>()

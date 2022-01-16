@@ -33,7 +33,7 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void SetSched(Application application,String rooname,String teacher,String purpose,String startingTime,String endTime,String week){
+    public void SetSched(Application application,String rooname,String teacher,String purpose,String startingTime,String endTime,String week,String starting2,String endtime2){
 
         ivholder = itemView.findViewById(R.id.iv_si);
         timeholder = itemView.findViewById(R.id.tv_time_si);
