@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CIElid_Check">
-        <activity android:name=".AddScheduleActivity"></activity>
+        <activity
+            android:name=".ShowEventItem"
+            android:exported="false" />
+        <activity
+            android:name=".ShowImageActivity"
+            android:exported="false" />
+        <activity android:name=".AddScheduleActivity" />
         <activity android:name=".SelectedWeekActivity" />
         <activity android:name=".RoomWeekActivity" />
         <activity android:name=".AddRoomActivity" />

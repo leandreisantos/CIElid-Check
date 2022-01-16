@@ -47,7 +47,7 @@ public class CalendarFragment extends Fragment {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference;
+    DatabaseReference reference,reference2;
 
     LinearLayoutManager linearLayoutManager;
 
@@ -71,6 +71,8 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+
+
 
 
 
@@ -102,6 +104,7 @@ public class CalendarFragment extends Fragment {
             checkPickDate = true;
 
             reference = database.getReference("All Event").child(yearSelected).child(monthSelected).child(daySelected);
+            reference2=database.getReference("All Events");
 
 
             FirebaseRecyclerOptions<EventMember> options =
@@ -115,7 +118,25 @@ public class CalendarFragment extends Fragment {
                         protected void onBindViewHolder(@NonNull EventHolder holder, int position, @NonNull EventMember model) {
                             holder.SetEvent(getActivity(),model.getUrl(),model.getDate(),model.getDesc(),model.getTitle(),model.getPostkey());
 
+                            String postkeyholder = getItem(position).getPostkey();
+                            String urlholder = getItem(position).getUrl();
+                            String dateholder = getItem(position).getDate();
+                            String descholder = getItem(position).getDesc();
+                            String titleholder = getItem(position).getTitle();
 
+                            holder.delete.setOnClickListener(view -> {
+                                reference.child(postkeyholder).removeValue();
+                                reference2.child(postkeyholder).removeValue();
+                            });
+
+                            holder.cl.setOnClickListener(view -> {
+                                Intent intent = new Intent(getActivity(),ShowEventItem.class);
+                                intent.putExtra("url",urlholder);
+                                intent.putExtra("date",dateholder);
+                                intent.putExtra("desc",descholder);
+                                intent.putExtra("title",titleholder);
+                                startActivity(intent);
+                            });
                         }
 
                         @NonNull
@@ -183,7 +204,25 @@ public class CalendarFragment extends Fragment {
                     protected void onBindViewHolder(@NonNull EventHolder holder, int position, @NonNull EventMember model) {
                         holder.SetEvent(getActivity(),model.getUrl(),model.getDate(),model.getDesc(),model.getTitle(),model.getPostkey());
 
+                        String postkeyholder = getItem(position).getPostkey();
+                        String urlholder = getItem(position).getUrl();
+                        String dateholder = getItem(position).getDate();
+                        String descholder = getItem(position).getDesc();
+                        String titleholder = getItem(position).getTitle();
 
+                        holder.delete.setOnClickListener(view -> {
+                            reference.child(postkeyholder).removeValue();
+                            reference2.child(postkeyholder).removeValue();
+                        });
+
+                        holder.cl.setOnClickListener(view -> {
+                            Intent intent = new Intent(getActivity(),ShowEventItem.class);
+                            intent.putExtra("url",urlholder);
+                            intent.putExtra("date",dateholder);
+                            intent.putExtra("desc",descholder);
+                            intent.putExtra("title",titleholder);
+                            startActivity(intent);
+                        });
                     }
 
                     @NonNull
