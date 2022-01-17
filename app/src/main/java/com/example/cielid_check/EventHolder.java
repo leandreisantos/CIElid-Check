@@ -9,6 +9,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 
@@ -20,12 +27,20 @@ public class EventHolder extends RecyclerView.ViewHolder {
     TextView ftitle,fdate,fdesc;
     ImageView fiv;
 
+    databaseReference dbr = new databaseReference();
+    FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
+    DatabaseReference userReference;
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String currentuid = user.getUid();
+
 
     public EventHolder(@NonNull View itemView) {
         super(itemView);
     }
 
     public void SetEvent(FragmentActivity activity,String url,String date,String desc,String title,String postkey){
+        userReference = database.getReference("All users").child(currentuid);
 
         titleholder = itemView.findViewById(R.id.tv_title_ei);
         dateholder = itemView.findViewById(R.id.tv_date_ei);
@@ -34,6 +49,24 @@ public class EventHolder extends RecyclerView.ViewHolder {
 
         titleholder.setText(title);
         dateholder.setText(date);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String statusholder = snapshot.child("status").getValue(String.class);
+
+                if(statusholder.equals("admin")){
+                    delete.setVisibility(View.VISIBLE);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 

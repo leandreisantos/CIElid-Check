@@ -1,12 +1,14 @@
 package com.example.cielid_check;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -172,6 +174,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
+                        Boolean samp=true;
                         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                             String stimeholder = userSnapshot.child("startTime2").getValue(String.class);
                             String etimeholder = userSnapshot.child("endTime2").getValue(String.class);
@@ -181,17 +184,21 @@ public class AddScheduleActivity extends AppCompatActivity {
 
                             if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
                                 Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                samp = false;
                             } else {
                                 if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
                                     Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                    samp = false;
                                 } else {
                                     if (CheckCurrentTime(stimeholder, temps, tempe)) {
                                         Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                        samp = false;
                                     } else {
                                         if (CheckCurrentTime(etimeholder, temps, tempe)) {
                                             Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                            samp = false;
                                         } else {
-                                            finalsubmitData();
+
                                         }
                                     }
                                 }
@@ -200,6 +207,11 @@ public class AddScheduleActivity extends AppCompatActivity {
 
 
                         }
+                        if(samp){
+                            finalsubmitData();
+                        }
+
+
                     } else {
                         finalsubmitData();
                     }

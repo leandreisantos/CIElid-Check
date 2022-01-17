@@ -1,11 +1,14 @@
 package com.example.cielid_check;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -75,6 +78,7 @@ public class RoomFragment extends Fragment {
 
                 if(statusholder.equals("admin")){
                     cv.setVisibility(View.VISIBLE);
+
                 }
 
             }
@@ -107,6 +111,7 @@ public class RoomFragment extends Fragment {
                             intent.putExtra("name",name);
                             startActivity(intent);
                         });
+                        holder.more.setOnClickListener(view -> showMore());
 
                     }
 
@@ -126,6 +131,21 @@ public class RoomFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
         rv.setLayoutManager(gridLayoutManager);
         rv.setAdapter(firebaseRecyclerAdapter2);
+
+    }
+
+    private void showMore() {
+
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.more_item,null);
+        TextView edit = view.findViewById(R.id.tv_edit_mi);
+        TextView delete = view.findViewById(R.id.tv_delete_ei);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
+        alertDialog.show();
+
 
     }
 }
