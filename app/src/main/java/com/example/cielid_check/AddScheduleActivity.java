@@ -180,16 +180,16 @@ public class AddScheduleActivity extends AppCompatActivity {
 
 
                             if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
-                                Toast.makeText(AddScheduleActivity.this, "bawal1" + idholder, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                             } else {
                                 if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
-                                    Toast.makeText(AddScheduleActivity.this, "bawal2" + idholder, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (CheckCurrentTime(stimeholder, temps, tempe)) {
-                                        Toast.makeText(AddScheduleActivity.this, "bawal3" + idholder, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                     } else {
                                         if (CheckCurrentTime(etimeholder, temps, tempe)) {
-                                            Toast.makeText(AddScheduleActivity.this, "bawal4" + idholder, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                         } else {
                                             finalsubmitData();
                                         }
