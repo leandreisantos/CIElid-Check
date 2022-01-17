@@ -1,5 +1,6 @@
 package com.example.cielid_check;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,8 +68,7 @@ public class ProfileFragment extends Fragment {
         editProf.setOnClickListener(v -> startActivity(new Intent(getActivity(), EditProfileActivity.class)));
 
         logout.setOnClickListener(v -> {
-            mAuth.signOut();
-            startActivity(new Intent(getActivity(),LoginActivity.class));
+            logout();
         });
 
     }
@@ -87,6 +87,8 @@ public class ProfileFragment extends Fragment {
 
                 namef.setText(nameholder);
                 statusf.setText(statusholder);
+                name.setText(nameholder);
+                status.setText(statusholder);
                 email.setText(emailholder);
                 Picasso.get().load(url).into(iv);
 
@@ -98,6 +100,23 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    public void logout() {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.logout_layout2,null);
+        TextView logout_tv = view.findViewById(R.id.logout_tv_ll);
+        TextView cancel_tv = view.findViewById(R.id.cancel_tv_ll);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
+        alertDialog.show();
+        logout_tv.setOnClickListener(v -> {
+            mAuth.signOut();
+            startActivity(new Intent(getActivity(),LoginActivity.class));
+        });
+        cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }
 
 

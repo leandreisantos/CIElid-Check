@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable-v24/custom_btn_red.xml" value="0.3828125" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable-v24/custom_input_et.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/current_incharge_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/delete_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/event_item_icon.xml" value="0.3828125" />
@@ -11,17 +13,22 @@
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_add_event.xml" value="0.33" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_add_room.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_add_schedule.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_edit_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_room_week.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_selected_week.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_show_event_item.xml" value="0.5" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_show_image.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_splash_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/calendar_fragment.xml" value="0.33" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/event_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/event_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/event_item_cf.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/info_sched_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/logout_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/logout_layout2.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/more_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/profile_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/room_fragment.xml" value="0.36666666666666664" />
