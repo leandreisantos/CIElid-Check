@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CIElid_Check">
         <activity
+            android:name=".EditRoomActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowEventItem"
             android:exported="false" />
         <activity

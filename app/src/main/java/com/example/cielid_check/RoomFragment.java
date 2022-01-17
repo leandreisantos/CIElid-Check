@@ -40,7 +40,7 @@ public class RoomFragment extends Fragment {
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DatabaseReference databaseReference,userReference;
+    DatabaseReference databaseReference,userReference,referencesched;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
@@ -105,13 +105,14 @@ public class RoomFragment extends Fragment {
                                 model.getTime());
 
                         String name = getItem(position).getName();
+                        String postkey = getItem(position).getUid();
 
                         holder.cv.setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(),RoomWeekActivity.class);
                             intent.putExtra("name",name);
                             startActivity(intent);
                         });
-                        holder.more.setOnClickListener(view -> showMore());
+                        holder.more.setOnClickListener(view -> showMore(name,postkey));
 
                     }
 
@@ -134,7 +135,7 @@ public class RoomFragment extends Fragment {
 
     }
 
-    private void showMore() {
+    private void showMore(String nameholder,String postkeyholder) {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View view = inflater.inflate(R.layout.more_item,null);
@@ -146,6 +147,47 @@ public class RoomFragment extends Fragment {
                 .create();
         alertDialog.show();
 
+        edit.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(),EditRoomActivity.class);
+            intent.putExtra("post",postkeyholder);
+            intent.putExtra("name",nameholder);
+            startActivity(intent);
+        });
 
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(nameholder,postkeyholder);
+            }
+        });
+
+    }
+
+    public void logout(String sholder,String eholder ) {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.logout_layout2,null);
+        TextView lbl = view.findViewById(R.id.desc);
+        TextView logout_tv = view.findViewById(R.id.logout_tv_ll);
+        TextView cancel_tv = view.findViewById(R.id.cancel_tv_ll);
+
+        referencesched=database.getReference(sholder);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
+        alertDialog.show();
+
+        lbl.setText("Are you sure want to delete? All save schedule will remove");
+
+        logout_tv.setText("Delete");
+
+        logout_tv.setOnClickListener(v -> {
+//            Toast.makeText(getActivity(), sholder, Toast.LENGTH_SHORT).show();
+            referencesched=database.getReference(sholder);
+            referencesched.child("Monday").removeValue();
+            referencesched.child("Tuesday").removeValue();
+            databaseReference.child(eholder).removeValue();
+        });
+        cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }
 }

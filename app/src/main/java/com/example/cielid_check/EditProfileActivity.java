@@ -8,10 +8,12 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText name,email,number;
     TextView save,cancel,back;
     ImageView iv;
+    ProgressBar pb;
 
     Uri imageUridp;
 
@@ -64,12 +67,38 @@ public class EditProfileActivity extends AppCompatActivity {
         cancel = findViewById(R.id.tv_cancel_ep);
         iv = findViewById(R.id.iv_ep);
         back = findViewById(R.id.tv_back_ep);
+        pb = findViewById(R.id.pv_login);
 
         back.setOnClickListener(view -> onBackPressed());
 
         iv.setOnClickListener(view -> chooseImage());
 
+        cancel.setOnClickListener(view -> onBackPressed());
+
+        save.setOnClickListener(view -> updateprofile());
+
     }
+
+    private void updateprofile() {
+        pb.setVisibility(View.VISIBLE);
+
+        String nameholder = name.getText().toString();
+        String emailholder = email.getText().toString();
+        String numberholder = number.getText().toString();
+
+        if(TextUtils.isEmpty(nameholder) || TextUtils.isEmpty(emailholder) || TextUtils.isEmpty(numberholder)){
+            Toast.makeText(EditProfileActivity.this, "Empty data invalid please fill up all requirements", Toast.LENGTH_SHORT).show();
+            pb.setVisibility(View.GONE);
+        }else{
+            reference.child("name").setValue(nameholder);
+            reference.child("email").setValue(emailholder);
+//            reference.child("floor").setValue(floorholder);
+            Toast.makeText(EditProfileActivity.this, "Successfully change data", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
+
+    }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");

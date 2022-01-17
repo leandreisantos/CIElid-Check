@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable-v24/custom_btn_red.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable-v24/custom_input_et.xml" value="0.3828125" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/cross_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/current_incharge_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/delete_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/drawable/event_item_icon.xml" value="0.3828125" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_add_room.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_add_schedule.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_edit_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_edit_room.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/Ronniel/Desktop/cloneProject/CIElid-Check/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />

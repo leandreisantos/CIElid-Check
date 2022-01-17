@@ -158,6 +158,10 @@ public class SelectedWeekActivity extends AppCompatActivity {
                                         //Toast.makeText(SelectedWeekActivity.this,CheckCurrentTime(temptime,stime,etime)+"", Toast.LENGTH_SHORT).show();
                                     });
 
+                                    holder.delete.setOnClickListener(view -> {
+                                        logout(sholder,eholder);
+                                    });
+
                                 }
 
                                 @NonNull
@@ -186,6 +190,28 @@ public class SelectedWeekActivity extends AppCompatActivity {
         });
 
 
+    }
+    public void logout(String sholder,String eholder ) {
+        LayoutInflater inflater = LayoutInflater.from(SelectedWeekActivity.this);
+        View view = inflater.inflate(R.layout.logout_layout2,null);
+        TextView lbl = view.findViewById(R.id.desc);
+        TextView logout_tv = view.findViewById(R.id.logout_tv_ll);
+        TextView cancel_tv = view.findViewById(R.id.cancel_tv_ll);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(SelectedWeekActivity.this)
+                .setView(view)
+                .create();
+        alertDialog.show();
+
+        lbl.setText("Are you sure want to delete?");
+
+        logout_tv.setText("Delete");
+
+        logout_tv.setOnClickListener(v -> {
+            referenceSched.child(sholder + eholder).removeValue();
+            onBackPressed();
+        });
+        cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }
 
     private void showIncharge(String uid_i,String pur_i,String s_i,String e_i) {
