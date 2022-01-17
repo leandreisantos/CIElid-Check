@@ -17,6 +17,15 @@
         android:layout_margin="10dp"/>
 
     <TextView
+        android:id="@+id/tv_curren_arw"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/current_incharge_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="10dp"/>
+
+    <TextView
         android:id="@+id/lbl_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -49,7 +49,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
-    DatabaseReference reference,referenceSched,checkReference;
+    DatabaseReference reference,referenceSched,checkReference,samplereference;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
@@ -60,6 +60,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     ScheduleMember member;
     long count;
+    Boolean issubmit = false;
 
     LinearLayoutManager linearLayoutManager;
 
@@ -108,6 +109,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         back.setOnClickListener(v -> onBackPressed());
         submit.setOnClickListener(v -> {
             submitData();
+            //referenceSched.removeValue();
         });
 
         stime.setOnClickListener(v -> {
@@ -152,73 +154,116 @@ public class AddScheduleActivity extends AppCompatActivity {
     }
 
     private void submitData() {
-        String temps = stime.getText().toString();
-        String tempe = etime.getText().toString();
+        String temps = starttime2;
+        String tempe = endtime2;
+
+        String tempss = stime.getText().toString();
+        String tempes = etime.getText().toString();
+
+        if(tempss.equals("0")||tempes.equals("0")){
+            Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
+        }else if(tempss.equals(tempes)){
+            Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
+        }else {
+
+            checkReference = database.getReference(namebundle).child(weekbundle);
+
+            checkReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                            String stimeholder = userSnapshot.child("startTime2").getValue(String.class);
+                            String etimeholder = userSnapshot.child("endTime2").getValue(String.class);
+                            String idholder = userSnapshot.child("teacher").getValue(String.class);
+                            String postkeyholder = userSnapshot.child("postkey").getValue(String.class);
 
 
-        checkReference = database.getReference(namebundle).child(weekbundle);
+                            if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
+                                Toast.makeText(AddScheduleActivity.this, "bawal1" + idholder, Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
+                                    Toast.makeText(AddScheduleActivity.this, "bawal2" + idholder, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (CheckCurrentTime(stimeholder, temps, tempe)) {
+                                        Toast.makeText(AddScheduleActivity.this, "bawal3" + idholder, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        if (CheckCurrentTime(etimeholder, temps, tempe)) {
+                                            Toast.makeText(AddScheduleActivity.this, "bawal4" + idholder, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            finalsubmitData();
+                                        }
+                                    }
+                                }
 
-        checkReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
-                    String stime = userSnapshot.child("startTime2").getValue(String.class);
-                    String etime = userSnapshot.child("endTime2").getValue(String.class);
+                            }
 
-                    if(CheckCurrentTime(temps,stime,etime,tempe)){
-                        Toast.makeText(AddScheduleActivity.this, "Bawal", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(AddScheduleActivity.this, "pwde", Toast.LENGTH_SHORT).show();
-                        if(temps.equals("0")||tempe.equals("0")){
-                            Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
-                        }else if(temps.equals(tempe)){
-                            Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
-                        }else{
-                            if(rb1.isChecked()||rb2.isChecked()){
-                                String radio_ans="";
-                                if(rb1.isChecked()) radio_ans = "Class";
-                                if(rb2.isChecked()) radio_ans = "Event";
-
-                                String id = referenceSched.push().getKey();
-
-                                member.setRoomname(namebundle);
-                                member.setTeacher(currentuid);
-                                member.setPurpose(radio_ans);
-                                member.setStartTime(temps);
-                                member.setEndTime(tempe);
-                                member.setWeek(weekbundle);
-                                member.setPostkey(id);
-                                member.setStartTime2(starttime2);
-                                member.setEndTime2(endtime2);
-
-                                referenceSched.child(id).setValue(member);
-
-                                Toast.makeText(AddScheduleActivity.this, "Schedule Created", Toast.LENGTH_SHORT).show();
-                                onBackPressed();
-
-                            }else Toast.makeText(AddScheduleActivity.this, "Please Select purpose of your schedule", Toast.LENGTH_SHORT).show();
 
                         }
+                    } else {
+                        finalsubmitData();
                     }
 
-
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    throw databaseError.toException();
+                }
+            });
+
+        }
 
 
     }
 
-    public boolean CheckCurrentTime(String timeToCheck, String fromTimeString, String untilTime,String timetocheck2) {
+    private void submitcheck() {
+        issubmit = true;
+
+    }
+
+    private void finalsubmitData() {
+
+        String temps = stime.getText().toString();
+        String tempe = etime.getText().toString();
+
+        if(temps.equals("0")||tempe.equals("0")){
+            Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
+        }else if(temps.equals(tempe)){
+            Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
+        }else{
+            if(rb1.isChecked()||rb2.isChecked()){
+                String radio_ans="";
+                if(rb1.isChecked()) radio_ans = "Class";
+                if(rb2.isChecked()) radio_ans = "Event";
+
+                String id = referenceSched.push().getKey();
+
+                member.setRoomname(namebundle);
+                member.setTeacher(currentuid);
+                member.setPurpose(radio_ans);
+                member.setStartTime(temps);
+                member.setEndTime(tempe);
+                member.setWeek(weekbundle);
+                member.setPostkey(temps+tempe);
+                member.setStartTime2(starttime2);
+                member.setEndTime2(endtime2);
+
+                referenceSched.child(temps+tempe).setValue(member);
+
+                Toast.makeText(AddScheduleActivity.this, "Schedule Created", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+
+            }else Toast.makeText(AddScheduleActivity.this, "Please Select purpose of your schedule", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public boolean CheckCurrentTime(String timeToCheck, String fromTimeString, String untilTime) {
         String[] checkCurrentTime = timeToCheck.split(":");
         String[] from = fromTimeString.split(":");
         String[] until = untilTime.split(":");
-        String[] checkcurrenttime2 = timetocheck2.split(":");
+        //String[] checkcurrenttime2 = timetocheck2.split(":");
 
 
         int timeToCheckHour = 0;
@@ -233,8 +278,8 @@ public class AddScheduleActivity extends AppCompatActivity {
         try {
             timeToCheckHour = Integer.parseInt(checkCurrentTime[0]);
             timeToCheckMinute = Integer.parseInt(checkCurrentTime[0]);
-            timeToCheckHour2 = Integer.parseInt(checkcurrenttime2[0]);
-            timeToCheckMinute2 = Integer.parseInt(checkcurrenttime2[0]);
+            //timeToCheckHour2 = Integer.parseInt(checkcurrenttime2[0]);
+            //timeToCheckMinute2 = Integer.parseInt(checkcurrenttime2[0]);
             fromHour = Integer.parseInt(from[0]);
             fromMinute = Integer.parseInt(from[1]);
             untilHour = Integer.parseInt(until[0]);
@@ -266,13 +311,12 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         //Toast.makeText(this, currentTime.get(Calendar.HOUR_OF_DAY) + ":" + currentTime.get(Calendar.MINUTE),Toast.LENGTH_SHORT).show();
 
-        if(((currentTime.after(fromTime) && currentTime.before(toTime)) || (currenttime2.after(fromTime) && currenttime2.before(toTime)))
-                || (currentTime.before(fromTime) && currenttime2.after(toTime))){
-            Toast.makeText(this, "true", Toast.LENGTH_SHORT).show();
+        if((currentTime.after(fromTime) && currentTime.before(toTime))||currentTime.equals(toTime)||currentTime.equals(fromTime)){
             return true;
+            //Toast.makeText(this, fromHour + ":" + fromMinute + " - " + untilHour + ":" + untilMinute + "   true", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "false", Toast.LENGTH_SHORT).show();
             return false;
+            //Toast.makeText(this, fromHour + ":" + fromMinute + " - " + untilHour + ":" + untilMinute + "   false", Toast.LENGTH_SHORT).show();
         }
 
 

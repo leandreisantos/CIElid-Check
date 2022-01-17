@@ -99,6 +99,8 @@ public class SelectedWeekActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
+
         title.setText("Schedule For "+weekBundle);
         nosched.setText("No Schedule for " + weekBundle+".....");
 
@@ -153,7 +155,7 @@ public class SelectedWeekActivity extends AppCompatActivity {
                                     holder.info.setOnClickListener(view -> {
                                         showIncharge(idname, purposeholder, sholder, eholder);
 
-                                        Toast.makeText(SelectedWeekActivity.this,CheckCurrentTime(temptime,stime,etime)+"", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(SelectedWeekActivity.this,CheckCurrentTime(temptime,stime,etime)+"", Toast.LENGTH_SHORT).show();
                                     });
 
                                 }
