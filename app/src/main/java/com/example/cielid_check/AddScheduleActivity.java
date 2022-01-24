@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -39,7 +40,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     TextView back;
     TextView roomName,name,submit,stime,etime;
-    TextView sched,nosched;
+    TextView sched,nosched,addt;
     ImageView iv;
     LottieAnimationView lot;
     RecyclerView rv;
@@ -101,6 +102,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         etime = findViewById(R.id.tv_et_as);
         lot = findViewById(R.id.loginlot);
         rv = findViewById(R.id.rv_sched_as);
+        addt = findViewById(R.id.tv_add_t_as);
 
         linearLayoutManager = new LinearLayoutManager(AddScheduleActivity.this);
         rv.setLayoutManager(linearLayoutManager);
@@ -112,6 +114,13 @@ public class AddScheduleActivity extends AppCompatActivity {
         submit.setOnClickListener(v -> {
             submitData();
             //referenceSched.removeValue();
+        });
+
+        addt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTeacher();
+            }
         });
 
         stime.setOnClickListener(v -> {
@@ -153,6 +162,24 @@ public class AddScheduleActivity extends AppCompatActivity {
             timePickerDialog.updateTime(hour,minute);
             timePickerDialog.show();
         });
+    }
+
+    private void showTeacher() {
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.show_teacher_layout,null);
+
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .create();
+        alertDialog.show();
+
+
+
+
+
+
     }
 
     private void submitData() {
