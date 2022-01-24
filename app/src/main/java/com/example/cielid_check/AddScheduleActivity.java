@@ -166,9 +166,18 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     private void showTeacher() {
 
+        LinearLayoutManager linearLayoutManager;
+
+        samplereference = database.getReference("All users");
+
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.show_teacher_layout,null);
+        RecyclerView rv2 = view.findViewById(R.id.rv_stl);
 
+        linearLayoutManager = new LinearLayoutManager(AddScheduleActivity.this);
+        rv2.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
 
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setView(view)
@@ -177,7 +186,42 @@ public class AddScheduleActivity extends AppCompatActivity {
 
 
 
+        FirebaseRecyclerOptions<AlluserMember> options =
+                new FirebaseRecyclerOptions.Builder<AlluserMember>()
+                        .setQuery(samplereference,AlluserMember.class)
+                        .build();
 
+        FirebaseRecyclerAdapter<AlluserMember,AllUserHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<AlluserMember, AllUserHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull AllUserHolder holder, int position, @NonNull AlluserMember model) {
+
+
+                        holder.setUser(getApplication(),model.getUid(),model.getName(),model.getStatus(),model.getEmail(),model.getUrl());
+
+//                        String idname = getItem(position).getTeacher();
+//                        String purposeholder  = getItem(position).getPurpose();
+//                        String sholder  = getItem(position).getStartTime();
+//                        String eholder  = getItem(position).getEndTime();
+
+
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public AllUserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.show_teacher_item,parent,false);
+
+                        return new AllUserHolder(view);
+                    }
+                };
+
+        firebaseRecyclerAdapter.startListening();
+
+        rv2.setAdapter(firebaseRecyclerAdapter);
 
 
     }
