@@ -12,6 +12,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -262,9 +263,9 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         if(tempss.equals("0")||tempes.equals("0")){
             Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
-        }else if(tempss.equals(tempes)){
+        }else if(tempss.equals(tempes)) {
             Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
             checkReference = database.getReference(namebundle).child(weekbundle);
 
@@ -280,27 +281,29 @@ public class AddScheduleActivity extends AppCompatActivity {
                             String postkeyholder = userSnapshot.child("postkey").getValue(String.class);
 
 
-                            if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
-                                Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
-                                samp = false;
-                            } else {
-                                if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
+                            if(samp == false){
+                                if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
                                     Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                     samp = false;
                                 } else {
-                                    if (CheckCurrentTime(stimeholder, temps, tempe)) {
+                                    if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
                                         Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                         samp = false;
                                     } else {
-                                        if (CheckCurrentTime(etimeholder, temps, tempe)) {
+                                        if (CheckCurrentTime(stimeholder, temps, tempe)) {
                                             Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
                                             samp = false;
                                         } else {
+                                            if (CheckCurrentTime(etimeholder, temps, tempe)) {
+                                                Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                                samp = false;
+                                            } else {
 
+                                            }
                                         }
                                     }
-                                }
 
+                                }
                             }
 
 
@@ -341,7 +344,10 @@ public class AddScheduleActivity extends AppCompatActivity {
             Toast.makeText(AddScheduleActivity.this, "Please Select Time Schedule", Toast.LENGTH_SHORT).show();
         }else if(temps.equals(tempe)){
             Toast.makeText(AddScheduleActivity.this, "Same Starting time and End time is not available", Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(TextUtils.isEmpty(idpick)){
+            Toast.makeText(AddScheduleActivity.this, "Please selece subject teacher", Toast.LENGTH_SHORT).show();
+        }
+        else{
             if(rb1.isChecked()||rb2.isChecked()){
                 String radio_ans="";
                 if(rb1.isChecked()) radio_ans = "Class";
@@ -350,7 +356,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 String id = referenceSched.push().getKey();
 
                 member.setRoomname(namebundle);
-                member.setTeacher(currentuid);
+                member.setTeacher(idpick);
                 member.setPurpose(radio_ans);
                 member.setStartTime(temps);
                 member.setEndTime(tempe);
