@@ -58,73 +58,81 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="10dp"/>
 
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:visibility="gone"
-                android:id="@+id/cv_as"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:cardCornerRadius="75dp"
-                app:cardElevation="10dp"
+                android:id="@+id/cl2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tv_back_as"
-                app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp">
+                app:layout_constraintLeft_toLeftOf="parent">
 
-                <ImageView
-                    android:id="@+id/iv_as"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_as"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:cardCornerRadius="75dp"
+                    app:cardElevation="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp">
 
-            </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/iv_as"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"/>
 
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/lbl_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Teacher incharge:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                app:layout_constraintLeft_toRightOf="@id/cv_as"
-                app:layout_constraintTop_toBottomOf="@id/tv_back_as"
-                android:layout_marginTop="50dp"/>
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tv_name_as"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/grey"
-                app:layout_constraintTop_toBottomOf="@id/lbl_name"
-                app:layout_constraintLeft_toRightOf="@id/cv_as"
-                android:layout_marginStart="12dp"
-                android:textSize="15sp"/>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/lbl_room"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Room Name:"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                app:layout_constraintLeft_toRightOf="@id/cv_as"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_as"
-                android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/lbl_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teacher incharge:"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintLeft_toRightOf="@id/cv_as"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="50dp"/>
+                <TextView
+                    android:id="@+id/tv_name_as"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_name"
+                    app:layout_constraintLeft_toRightOf="@id/cv_as"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"/>
 
-            <TextView
-                android:id="@+id/tv_room_as"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/grey"
-                app:layout_constraintTop_toBottomOf="@id/lbl_room"
-                app:layout_constraintLeft_toRightOf="@id/cv_as"
-                android:layout_marginStart="12dp"
-                android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/lbl_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Room Name:"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintLeft_toRightOf="@id/cv_as"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name_as"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_room_as"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/lbl_room"
+                    app:layout_constraintLeft_toRightOf="@id/cv_as"
+                    android:layout_marginStart="12dp"
+                    android:textSize="15sp"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/tv_add_t_as"
@@ -133,7 +141,7 @@
                 android:text="Add schedule teacher/subject teacher"
                 android:background="@drawable/custom_outline_bg"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_room_as"
+                app:layout_constraintTop_toBottomOf="@id/cl2"
                 android:padding="20dp"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_margin="10dp"

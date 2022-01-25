@@ -3,6 +3,7 @@ package com.example.cielid_check;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +45,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     ImageView iv;
     LottieAnimationView lot;
     RecyclerView rv;
+    ConstraintLayout cv;
 
     RadioButton rb1,rb2;
 
@@ -66,6 +68,8 @@ public class AddScheduleActivity extends AppCompatActivity {
     Boolean issubmit = false;
 
     LinearLayoutManager linearLayoutManager;
+
+    String idpick;
 
 
     @Override
@@ -103,6 +107,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         lot = findViewById(R.id.loginlot);
         rv = findViewById(R.id.rv_sched_as);
         addt = findViewById(R.id.tv_add_t_as);
+        cv = findViewById(R.id.cl2);
 
         linearLayoutManager = new LinearLayoutManager(AddScheduleActivity.this);
         rv.setLayoutManager(linearLayoutManager);
@@ -200,9 +205,31 @@ public class AddScheduleActivity extends AppCompatActivity {
                         holder.setUser(getApplication(),model.getUid(),model.getName(),model.getStatus(),model.getEmail(),model.getUrl());
 
 //                        String idname = getItem(position).getTeacher();
-//                        String purposeholder  = getItem(position).getPurpose();
-//                        String sholder  = getItem(position).getStartTime();
-//                        String eholder  = getItem(position).getEndTime();
+                          String id = getItem(position).getUid();
+
+
+
+                        holder.selectholder.setOnClickListener(view1 -> {
+                            idpick = id;
+                            reference = database.getReference("All users").child(idpick);
+                            cv.setVisibility(View.VISIBLE);
+                            reference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String nameholder = snapshot.child("name").getValue(String.class);
+                                    String url = snapshot.child("url").getValue(String.class);
+
+                                    name.setText(nameholder);
+                                    Picasso.get().load(url).into(iv);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            alertDialog.dismiss();
+                        });
 
 
 
@@ -415,21 +442,6 @@ public class AddScheduleActivity extends AppCompatActivity {
         sched.setText("Schedule for "+weekbundle);
         nosched.setText("No Schedule for "+weekbundle+"!");
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String nameholder = snapshot.child("name").getValue(String.class);
-                String url = snapshot.child("url").getValue(String.class);
-
-                name.setText(nameholder);
-                Picasso.get().load(url).into(iv);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         referenceSched.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
