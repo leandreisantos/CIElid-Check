@@ -85,7 +85,11 @@ public class SelectedWeekActivity extends AppCompatActivity {
 
 
 
-        back.setOnClickListener(v -> onBackPressed());
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(SelectedWeekActivity.this,RoomWeekActivity.class);
+            intent.putExtra("name",namebundle);
+            startActivity(intent);
+        });
 
         add.setOnClickListener(v -> {
             Intent intent = new Intent(SelectedWeekActivity.this,AddScheduleActivity.class);
@@ -93,6 +97,13 @@ public class SelectedWeekActivity extends AppCompatActivity {
             intent.putExtra("w",weekBundle);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SelectedWeekActivity.this,RoomWeekActivity.class);
+        intent.putExtra("name",namebundle);
+        startActivity(intent);
     }
 
     @Override
@@ -162,6 +173,8 @@ public class SelectedWeekActivity extends AppCompatActivity {
                                         logout(sholder,eholder);
                                     });
 
+
+
                                 }
 
                                 @NonNull
@@ -209,7 +222,6 @@ public class SelectedWeekActivity extends AppCompatActivity {
 
         logout_tv.setOnClickListener(v -> {
             referenceSched.child(sholder + eholder).removeValue();
-            onBackPressed();
         });
         cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }

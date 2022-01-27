@@ -33,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -71,6 +72,10 @@ public class AddScheduleActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
 
     String idpick;
+
+    Query query;
+
+    int selechcheck;
 
 
     @Override
@@ -175,6 +180,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager;
 
         samplereference = database.getReference("All users");
+        query = samplereference.orderByChild("status").equalTo("teacher");
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.show_teacher_layout,null);
@@ -194,7 +200,7 @@ public class AddScheduleActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<AlluserMember> options =
                 new FirebaseRecyclerOptions.Builder<AlluserMember>()
-                        .setQuery(samplereference,AlluserMember.class)
+                        .setQuery(query,AlluserMember.class)
                         .build();
 
         FirebaseRecyclerAdapter<AlluserMember,AllUserHolder> firebaseRecyclerAdapter =
@@ -283,19 +289,27 @@ public class AddScheduleActivity extends AppCompatActivity {
 
                             if(samp == false){
                                 if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
-                                    Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                    if(selechcheck !=1){
+                                        Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                    }
                                     samp = false;
                                 } else {
                                     if (CheckCurrentTime(tempe, stimeholder, etimeholder)) {
-                                        Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                        if(selechcheck !=1){
+                                            Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                        }
                                         samp = false;
                                     } else {
                                         if (CheckCurrentTime(stimeholder, temps, tempe)) {
-                                            Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                            if(selechcheck !=1){
+                                                Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                            }
                                             samp = false;
                                         } else {
                                             if (CheckCurrentTime(etimeholder, temps, tempe)) {
-                                                Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                                if(selechcheck !=1){
+                                                    Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
+                                                }
                                                 samp = false;
                                             } else {
 
@@ -368,7 +382,10 @@ public class AddScheduleActivity extends AppCompatActivity {
                 referenceSched.child(temps+tempe).setValue(member);
 
                 Toast.makeText(AddScheduleActivity.this, "Schedule Created", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                Intent intent = new Intent(AddScheduleActivity.this,SelectedWeekActivity.class);
+                intent.putExtra("name",namebundle);
+                intent.putExtra("w",weekbundle);
+                startActivity(intent);
 
             }else Toast.makeText(AddScheduleActivity.this, "Please Select purpose of your schedule", Toast.LENGTH_SHORT).show();
 

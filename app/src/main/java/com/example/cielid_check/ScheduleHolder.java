@@ -22,6 +22,7 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
 
     ImageView ivholder;
     TextView timeholder,purholder,info,delete;
+    TextView starholder,availholder;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -44,8 +45,15 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
         purholder = itemView.findViewById(R.id.tv_purpose_si);
         info = itemView.findViewById(R.id.tv_info_si);
         delete = itemView.findViewById(R.id.tv_delete_si);
+        starholder = itemView.findViewById(R.id.tv_star_si);
+        availholder = itemView.findViewById(R.id.tv_reserve_si);
 
         reference = database.getReference("All users").child(teacher);
+
+        if(currentuid.equals(teacher)){
+            starholder.setVisibility(View.VISIBLE);
+            availholder.setVisibility(View.VISIBLE);
+        }
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
