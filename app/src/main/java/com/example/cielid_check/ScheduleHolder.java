@@ -33,6 +33,8 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String currentuid = user.getUid();
 
+    Boolean checkavail = false;
+
 
 
     public ScheduleHolder(@NonNull View itemView) {
@@ -57,7 +59,20 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
             starholder.setVisibility(View.VISIBLE);
             availholder.setVisibility(View.VISIBLE);
             cl.setVisibility(View.VISIBLE);
+
         }
+        availholder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkavail){
+                    availholder.setText("Not Available today give schedule to othersx");
+                    checkavail = false;
+                }else{
+                    availholder.setText("Cancel");
+                    checkavail = true;
+                }
+            }
+        });
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
