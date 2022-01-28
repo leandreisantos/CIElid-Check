@@ -286,8 +286,6 @@ public class AddScheduleActivity extends AppCompatActivity {
                             String idholder = userSnapshot.child("teacher").getValue(String.class);
                             String postkeyholder = userSnapshot.child("postkey").getValue(String.class);
 
-
-                            if(samp == false){
                                 if (CheckCurrentTime(temps, stimeholder, etimeholder)) {
                                     if(selechcheck !=1){
                                         Toast.makeText(AddScheduleActivity.this, "invalid schedule", Toast.LENGTH_SHORT).show();
@@ -318,12 +316,13 @@ public class AddScheduleActivity extends AppCompatActivity {
                                     }
 
                                 }
-                            }
+
 
 
                         }
                         if(samp){
                             finalsubmitData();
+                            selechcheck = 1;
                         }
 
 
