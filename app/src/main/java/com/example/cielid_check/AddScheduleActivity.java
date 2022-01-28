@@ -386,6 +386,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 intent.putExtra("name",namebundle);
                 intent.putExtra("w",weekbundle);
                 startActivity(intent);
+                finish();
 
             }else Toast.makeText(AddScheduleActivity.this, "Please Select purpose of your schedule", Toast.LENGTH_SHORT).show();
 
