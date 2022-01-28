@@ -465,6 +465,42 @@ public class AddScheduleActivity extends AppCompatActivity {
         sched.setText("Schedule for "+weekbundle);
         nosched.setText("No Schedule for "+weekbundle+"!");
 
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String statusholder = snapshot.child("status").getValue(String.class);
+
+                if(statusholder.equals("admin")){
+                    addt.setVisibility(View.VISIBLE);
+                }
+                else if(statusholder.equals("teacher")){
+                    addt.setVisibility(View.GONE);
+                    cv.setVisibility(View.VISIBLE);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String nameholder = snapshot.child("name").getValue(String.class);
+                            String url = snapshot.child("url").getValue(String.class);
+
+                            name.setText(nameholder);
+                            Picasso.get().load(url).into(iv);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         referenceSched.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
