@@ -59,7 +59,11 @@ public class RoomWeekActivity extends AppCompatActivity {
         back = findViewById(R.id.tv_back_arw);
         currenttv = findViewById(R.id.tv_curren_arw);
 
-        back.setOnClickListener(view -> onBackPressed());
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(RoomWeekActivity.this,MainActivity.class);
+            startActivity(intent);
+        });
+
 
 
 
@@ -106,6 +110,12 @@ public class RoomWeekActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(RoomWeekActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     @Override

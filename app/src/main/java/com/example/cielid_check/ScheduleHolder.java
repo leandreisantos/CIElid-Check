@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
     ImageView ivholder;
     TextView timeholder,purholder,info,delete;
     TextView starholder,availholder;
+    ConstraintLayout cl;
 
     databaseReference dbr = new databaseReference();
     FirebaseDatabase database = FirebaseDatabase.getInstance(dbr.keyDb());
@@ -47,12 +49,14 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
         delete = itemView.findViewById(R.id.tv_delete_si);
         starholder = itemView.findViewById(R.id.tv_star_si);
         availholder = itemView.findViewById(R.id.tv_reserve_si);
+        cl = itemView.findViewById(R.id.cl4);
 
         reference = database.getReference("All users").child(teacher);
 
         if(currentuid.equals(teacher)){
             starholder.setVisibility(View.VISIBLE);
             availholder.setVisibility(View.VISIBLE);
+            cl.setVisibility(View.VISIBLE);
         }
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -78,7 +82,7 @@ public class ScheduleHolder extends RecyclerView.ViewHolder {
 
                 if(statusholder.equals("admin")){
                     delete.setVisibility(View.VISIBLE);
-
+                    cl.setVisibility(View.VISIBLE);
                 }
 
             }

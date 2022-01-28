@@ -222,6 +222,7 @@ public class SelectedWeekActivity extends AppCompatActivity {
 
         logout_tv.setOnClickListener(v -> {
             referenceSched.child(sholder + eholder).removeValue();
+            alertDialog.dismiss();
         });
         cancel_tv.setOnClickListener(v -> alertDialog.dismiss());
     }
